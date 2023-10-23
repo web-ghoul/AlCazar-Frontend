@@ -28,13 +28,13 @@ const Header = () => {
   const dispatch = useDispatch()
   const router = useRouter()
   const [activeList, setActiveList] = useState(false)
-  if (document) {
-    document.addEventListener('click', (e) => {
-      if (!e.target.classList.contains("activate")) {
-        setActiveList(false)
-      }
-    })
-  }
+  // if (window) {
+  //   window.addEventListener('click', (e) => {
+  //     if (!e.target.classList.contains("activate")) {
+  //       setActiveList(false)
+  //     }
+  //   })
+  // }
 
   const handleLogOut = () => {
     dispatch(logout())

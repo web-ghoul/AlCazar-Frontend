@@ -27,6 +27,8 @@ import EditItemForm from "./EditItemForm";
 import EditCategoryForm from "./EditCategoryForm";
 import EditUserForm from "./EditUserForm";
 import EditProfileForm from "./EditProfileForm";
+import { ProfileContext } from "@/context/ProfileContext";
+import { getUsers } from "@/store/usersSlice";
 
 const Form = ({ type }) => {
   const router = useRouter();
@@ -36,11 +38,15 @@ const Form = ({ type }) => {
   const {
     itemId,
     categoryId,
+    user_id,
     handleCloseDeleteItemModal,
-    handleCloseEditItemModal,
+    handleCloseDeleteUserModal,
     handleCloseDeleteCategoryModal,
+    handleCloseEditItemModal,
     handleCloseEditCategoryModal,
   } = useContext(DashboardContext);
+
+  const { handleCloseDeleteAccountModal } = useContext(ProfileContext)
 
   const loginFormik = useFormik({
     initialValues: {
@@ -296,6 +302,55 @@ const Form = ({ type }) => {
     },
   });
 
+  const editCategoryFormik = useFormik({
+    initialValues: {
+      title: "",
+      image: "",
+    },
+    validationSchema: yup.object({
+      title: yup.string("Enter your title").required(),
+      image: yup.mixed().required("Image is required"),
+    }),
+    onSubmit: async (values) => {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("image", values.image);
+      formData.append("data", JSON.stringify(values));
+      await axios
+        .patch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/editCategory/${categoryId}`,
+          formData,
+          {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
+          }
+        )
+        .then((res) => {
+          try {
+            toast.success(res.data.message);
+          } catch (error) {
+            toast.error(error.message);
+          }
+        })
+        .catch((err) => {
+          let msg;
+          try {
+            msg = err.response.data.error
+            toast.error(msg);
+          } catch (error) {
+            msg = error.message
+            toast.error(msg);
+          }
+          if (msg === `${process.env.NEXT_PUBLIC_SESSION_EXPIRED_MESSAGE}`) {
+            dispatch(logout())
+            router.push(`/login`)
+          }
+        });
+      setLoading(false);
+    },
+  });
+
   const contactFormik = useFormik({
     initialValues: {
       name: "",
@@ -416,6 +471,85 @@ const Form = ({ type }) => {
     setLoading(false);
   };
 
+  const handleDeleteUser = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    await axios
+      .delete(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/deleteUser/${user_id}`,
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        }
+      )
+      .then((res) => {
+        try {
+          toast.success(res.data.message);
+          handleCloseDeleteUserModal();
+          dispatch(getUsers({ token }));
+        } catch (error) {
+          toast.error(error.message);
+        }
+      })
+      .catch((err) => {
+        handleCloseDeleteUserModal();
+        let msg;
+        try {
+          msg = err.response.data.error
+          toast.error(msg);
+        } catch (error) {
+          msg = error.message
+          toast.error(msg);
+        }
+        if (msg === `${process.env.NEXT_PUBLIC_SESSION_EXPIRED_MESSAGE}`) {
+          dispatch(logout())
+          router.push(`/login`)
+        }
+      });
+    setLoading(false);
+  };
+
+  const handleDeleteAccount = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    await axios
+      .delete(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/user/deleteAccount`,
+        {
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        }
+      )
+      .then((res) => {
+        try {
+          toast.success(res.data.message);
+          handleCloseDeleteAccountModal();
+          dispatch(logout());
+          router.push(`/login`)
+        } catch (error) {
+          toast.error(error.message);
+        }
+      })
+      .catch((err) => {
+        handleCloseDeleteAccountModal();
+        let msg;
+        try {
+          msg = err.response.data.error
+          toast.error(msg);
+        } catch (error) {
+          msg = error.message
+          toast.error(msg);
+        }
+        if (msg === `${process.env.NEXT_PUBLIC_SESSION_EXPIRED_MESSAGE}`) {
+          dispatch(logout())
+          router.push(`/login`)
+        }
+      });
+    setLoading(false);
+  };
+
   return (
     <form
       onSubmit={
@@ -435,7 +569,7 @@ const Form = ({ type }) => {
                       ? addNewCategoryFormik.handleSubmit
                       : type === "delete_item"
                         ? handleDeleteItem
-                        : type === "delete_category" && handleDeleteCategory
+                        : type === "delete_category" ? handleDeleteCategory : type === "delete_user" ? handleDeleteUser : type === "delete_account" && handleDeleteAccount
       }
       className={`form grid jcs aic g30`}
     >
@@ -456,7 +590,7 @@ const Form = ({ type }) => {
       ) : type === "delete_item" ? (
         <DeleteItemForm loading={loading} />
       ) : (
-        type === "delete_category" ? <DeleteCategoryForm loading={loading} /> : type === "delete_user" ? <DeleteUserForm loading={loading} /> : type === "delete_account" ? <DeleteAccountForm loading={loading} /> : type === "edit_item" ? <EditItemForm /> : type === "edit_category" ? <EditCategoryForm /> : type === "edit_user" ? <EditUserForm /> : type === "edit_profile" && <EditProfileForm />
+        type === "delete_category" ? (<DeleteCategoryForm loading={loading} />) : type === "delete_user" ? (<DeleteUserForm loading={loading} />) : type === "delete_account" ? (<DeleteAccountForm loading={loading} />) : type === "edit_item" ? <EditItemForm loading={loading} /> : type === "edit_category" ? <EditCategoryForm loading={loading} /> : type === "edit_user" ? <EditUserForm loading={loading} /> : type === "edit_profile" && <EditProfileForm loading={loading} />
       )}
     </form>
   );

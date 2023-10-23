@@ -10,7 +10,6 @@ import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { logging } from "@/store/authSlice";
-import { getUsers } from '@/store/usersSlice';
 import DeleteAccountModal from '@/models/DeleteAccountModal';
 import EditCategoryModal from '@/models/EditCategoryModal';
 import EditItemModal from '@/models/EditItemModal';
@@ -25,7 +24,6 @@ const Main = ({ children }) => {
             const token = Cookies.get("AlCazar_token")
             const userId = Cookies.get("AlCazar_userId")
             dispatch(logging({ token, userId }))
-            dispatch(getUsers({ token }))
         } catch (error) {
             toast.error(error.message)
         }

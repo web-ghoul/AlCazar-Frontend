@@ -17,7 +17,7 @@ const DeleteItemForm = ({ loading }) => {
         fw={"600"}
       />
       <Box className={`flex jcfe aic g10`}>
-        <LoadButton loading={loading}>
+        <LoadButton deleted={true} loading={loading}>
           <DeleteButton type="submit">Delete</DeleteButton>
         </LoadButton>
         <PrimaryButton onClick={handleCloseDeleteItemModal}>

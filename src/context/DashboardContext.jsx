@@ -5,7 +5,7 @@ export const DashboardContext = createContext();
 const DashboardProvider = ({ children }) => {
   const [itemId, setItemId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [user_id, setUserId] = useState(null);
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
   const [openDeleteCategoryModal, setOpenDeleteCategoryModal] = useState(false);
   const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
@@ -31,7 +31,7 @@ const DashboardProvider = ({ children }) => {
   };
 
   const handleCloseDeleteUserModal = () => {
-    setOpenDeleteCategoryModal(false);
+    setOpenDeleteUserModal(false);
   };
   const handleOpenDeleteUserModal = (id) => {
     setOpenDeleteUserModal(true);
@@ -67,7 +67,7 @@ const DashboardProvider = ({ children }) => {
       value={{
         itemId,
         categoryId,
-        userId,
+        user_id,
         openDeleteItemModal,
         handleCloseDeleteItemModal,
         handleOpenDeleteItemModal,

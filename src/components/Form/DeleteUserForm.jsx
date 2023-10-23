@@ -6,7 +6,7 @@ import LoadButton from '../LoadButton/LoadButton';
 import { DeleteButton } from '@/MUIComponents/DeleteButton';
 import { PrimaryButton } from '@/MUIComponents/PrimaryButton';
 
-const DeleteUserForm = () => {
+const DeleteUserForm = ({loading}) => {
   const { handleCloseDeleteUserModal } = useContext(DashboardContext);
   return (
     <>
@@ -17,7 +17,7 @@ const DeleteUserForm = () => {
         fw={"600"}
       />
       <Box className={`flex jcfe aic g10`}>
-        <LoadButton loading={loading}>
+        <LoadButton deleted={true} loading={loading}>
           <DeleteButton type="submit">Delete</DeleteButton>
         </LoadButton>
         <PrimaryButton onClick={handleCloseDeleteUserModal}>

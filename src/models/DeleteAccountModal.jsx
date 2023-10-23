@@ -17,7 +17,7 @@ const DeleteAccountModal = () => {
       aria-describedby="modal-modal-description"
     >
       <Box className={`flex jcc aic ${styles.modal} center_abs_x_y pad20`}>
-        <Form type={"delete_Account"} />
+        <Form type={"delete_account"} />
       </Box>
     </Modal>
   );

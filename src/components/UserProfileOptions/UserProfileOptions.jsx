@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -52,8 +52,8 @@ function a11yProps(index) {
 }
 
 const UserProfileOptions = () => {
-    const {option} = useContext(ProfileContext)
-    const [value, setValue] = React.useState(0);
+    const { option } = useContext(ProfileContext)
+    const [value, setValue] = useState(0);
     const dispatch = useDispatch()
     const { user } = useSelector((state) => state.user)
     const handleChange = (_, newValue) => {
@@ -129,7 +129,7 @@ const UserProfileOptions = () => {
                 </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-                <UserInfo/>
+                <UserInfo />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 Addresses
