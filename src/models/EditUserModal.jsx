@@ -4,23 +4,23 @@ import { DashboardContext } from "@/context/DashboardContext";
 import { Box, Modal } from "@mui/material";
 import styles from "./modal.module.scss";
 
-const UpdateCategoryModal = () => {
+const EditUserModal = () => {
   const {
-    openDeleteCategoryModal,
-    handleCloseDeleteCategoryModal,
+    openEditUserModal,
+    handleCloseEditUserModal,
   } = useContext(DashboardContext);
   return (
     <Modal
-      open={openDeleteCategoryModal}
-      onClose={handleCloseDeleteCategoryModal}
+      open={openEditUserModal}
+      onClose={handleCloseEditUserModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Box className={`flex jcc aic ${styles.modal} center_abs_x_y pad20`}>
-        <Form type={"delete_category"} />
+        <Form type={"edit_user"} />
       </Box>
     </Modal>
   );
 };
 
-export default UpdateCategoryModal;
+export default EditUserModal;

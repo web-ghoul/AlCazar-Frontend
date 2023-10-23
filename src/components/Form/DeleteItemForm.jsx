@@ -6,7 +6,7 @@ import { PrimaryButton } from "@/MUIComponents/PrimaryButton";
 import { Box } from "@mui/material";
 import LoadButton from "../LoadButton/LoadButton";
 
-const DeleteItem = ({ loading }) => {
+const DeleteItemForm = ({ loading }) => {
   const { handleCloseDeleteItemModal } = useContext(DashboardContext);
   return (
     <>
@@ -28,4 +28,4 @@ const DeleteItem = ({ loading }) => {
   );
 };
 
-export default DeleteItem;
+export default DeleteItemForm;

@@ -12,15 +12,21 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import AddNewItemForm from "./AddNewItemForm";
 import AddNewCategoryForm from "./AddNewCategoryForm";
-import DeleteItem from "./DeleteItem";
+import DeleteItemForm from "./DeleteItemForm";
 import { DashboardContext } from "@/context/DashboardContext";
-import DeleteCategory from "./DeleteCategory";
+import DeleteCategoryForm from "./DeleteCategoryForm";
 import { useDispatch, useSelector } from "react-redux";
 import { getItems } from "@/store/itemsSlice";
 import { getCategories } from "@/store/categoriesSlice";
 import ContactForm from "./ContactForm";
 import { logging, logout } from "@/store/authSlice";
 import Cookies from "js-cookie";
+import DeleteUserForm from "./DeleteUserForm";
+import DeleteAccountForm from "./DeleteAccountForm";
+import EditItemForm from "./EditItemForm";
+import EditCategoryForm from "./EditCategoryForm";
+import EditUserForm from "./EditUserForm";
+import EditProfileForm from "./EditProfileForm";
 
 const Form = ({ type }) => {
   const router = useRouter();
@@ -31,9 +37,9 @@ const Form = ({ type }) => {
     itemId,
     categoryId,
     handleCloseDeleteItemModal,
-    handleCloseUpdateItemModal,
+    handleCloseEditItemModal,
     handleCloseDeleteCategoryModal,
-    handleCloseUpdateCategoryModal,
+    handleCloseEditCategoryModal,
   } = useContext(DashboardContext);
 
   const loginFormik = useFormik({
@@ -448,9 +454,9 @@ const Form = ({ type }) => {
       ) : type === "contact" ? (
         <ContactForm loading={loading} formik={contactFormik} />
       ) : type === "delete_item" ? (
-        <DeleteItem loading={loading} />
+        <DeleteItemForm loading={loading} />
       ) : (
-        type === "delete_category" && <DeleteCategory loading={loading} />
+        type === "delete_category" ? <DeleteCategoryForm loading={loading} /> : type === "delete_user" ? <DeleteUserForm loading={loading} /> : type === "delete_account" ? <DeleteAccountForm loading={loading} /> : type === "edit_item" ? <EditItemForm /> : type === "edit_category" ? <EditCategoryForm /> : type === "edit_user" ? <EditUserForm /> : type === "edit_profile" && <EditProfileForm />
       )}
     </form>
   );

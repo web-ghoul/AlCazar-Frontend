@@ -5,65 +5,87 @@ export const DashboardContext = createContext();
 const DashboardProvider = ({ children }) => {
   const [itemId, setItemId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [openDeleteItemModal, setOpenDeleteItemModal] = useState(false);
   const [openDeleteCategoryModal, setOpenDeleteCategoryModal] = useState(false);
-  const [openUpdateItemModal, setOpenUpdateItemModal] = useState(false);
-  const [openUpdateCategoryModal, setOpenUpdateCategoryModal] = useState(false);
+  const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
+  const [openEditItemModal, setOpenEditItemModal] = useState(false);
+  const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
+  const [openEditUserModal, setOpenEditUserModal] = useState(false);
 
   //Delete
-  const handleCloseDeleteItemModal = (id) => {
+  const handleCloseDeleteItemModal = () => {
     setOpenDeleteItemModal(false);
-    setItemId(id);
   };
   const handleOpenDeleteItemModal = (id) => {
     setOpenDeleteItemModal(true);
     setItemId(id);
   };
 
-  const handleCloseDeleteCategoryModal = (id) => {
+  const handleCloseDeleteCategoryModal = () => {
     setOpenDeleteCategoryModal(false);
-    setCategoryId(id);
   };
   const handleOpenDeleteCategoryModal = (id) => {
     setOpenDeleteCategoryModal(true);
     setCategoryId(id);
   };
 
-  //Update
-  const handleCloseUpdateItemModal = (id) => {
-    setOpenUpdateItemModal(false);
-    setItemId(id);
+  const handleCloseDeleteUserModal = () => {
+    setOpenDeleteCategoryModal(false);
   };
-  const handleOpenUpdateItemModal = (id) => {
-    setOpenUpdateItemModal(true);
+  const handleOpenDeleteUserModal = (id) => {
+    setOpenDeleteUserModal(true);
+    setUserId(id);
+  };
+
+  //Edit
+  const handleCloseEditItemModal = () => {
+    setOpenEditItemModal(false);
+  };
+  const handleOpenEditItemModal = (id) => {
+    setOpenEditItemModal(true);
     setItemId(id);
   };
 
-  const handleCloseUpdateCategoryModal = (id) => {
-    setOpenUpdateCategoryModal(false);
+  const handleCloseEditCategoryModal = () => {
+    setOpenEditCategoryModal(false);
+  };
+  const handleOpenEditCategoryModal = (id) => {
+    setOpenEditCategoryModal(true);
     setCategoryId(id);
   };
-  const handleOpenUpdateCategoryModal = (id) => {
-    setOpenUpdateCategoryModal(true);
-    setCategoryId(id);
+
+  const handleCloseEditUserModal = () => {
+    setOpenEditUserModal(false);
+  };
+  const handleOpenEditUserModal = (id) => {
+    setOpenEditCategoryModal(true);
+    setUserId(id);
   };
   return (
     <DashboardContext.Provider
       value={{
         itemId,
         categoryId,
+        userId,
         openDeleteItemModal,
         handleCloseDeleteItemModal,
         handleOpenDeleteItemModal,
         openDeleteCategoryModal,
         handleCloseDeleteCategoryModal,
         handleOpenDeleteCategoryModal,
-        openUpdateItemModal,
-        handleCloseUpdateItemModal,
-        handleOpenUpdateItemModal,
-        openUpdateCategoryModal,
-        handleCloseUpdateCategoryModal,
-        handleOpenUpdateCategoryModal
+        openDeleteUserModal,
+        handleCloseDeleteUserModal,
+        handleOpenDeleteUserModal,
+        openEditItemModal,
+        handleCloseEditItemModal,
+        handleOpenEditItemModal,
+        openEditCategoryModal,
+        handleCloseEditCategoryModal,
+        handleOpenEditCategoryModal,
+        openEditUserModal,
+        handleCloseEditUserModal,
+        handleOpenEditUserModal,
       }}
     >
       {children}

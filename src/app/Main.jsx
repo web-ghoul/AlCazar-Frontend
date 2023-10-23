@@ -11,6 +11,12 @@ import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { logging } from "@/store/authSlice";
 import { getUsers } from '@/store/usersSlice';
+import DeleteAccountModal from '@/models/DeleteAccountModal';
+import EditCategoryModal from '@/models/EditCategoryModal';
+import EditItemModal from '@/models/EditItemModal';
+import EditProfileModal from '@/models/EditProfileModal';
+import EditUserModal from '@/models/EditUserModal';
+import DeleteUserModal from '@/models/DeleteUserModal';
 
 const Main = ({ children }) => {
     const dispatch = useDispatch()
@@ -30,6 +36,12 @@ const Main = ({ children }) => {
             {children}
             <DeleteItemModel />
             <DeleteCategoryModel />
+            <DeleteAccountModal />
+            <DeleteUserModal />
+            <EditCategoryModal />
+            <EditItemModal />
+            <EditProfileModal />
+            <EditUserModal />
             <Toaster />
             <Footer />
         </main>

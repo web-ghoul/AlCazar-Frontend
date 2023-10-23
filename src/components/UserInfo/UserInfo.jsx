@@ -4,7 +4,8 @@ import Title from '../Title/Title'
 import styles from "./UserInfo.module.scss"
 import { useSelector } from 'react-redux'
 import { PrimaryIconButton } from '@/MUIComponents/PrimaryIconButton'
-import { EditRounded } from '@mui/icons-material'
+import { DeleteRounded, EditRounded } from '@mui/icons-material'
+import { DeleteIconButton } from '@/MUIComponents/DeleteIconButton'
 
 const UserInfo = () => {
     const { user } = useSelector((state) => state.user)
@@ -45,10 +46,16 @@ const UserInfo = () => {
                     </Box>
                 )
             }
-            <PrimaryIconButton className={`flex jcc aic g10`}>
-                <EditRounded />
-                <Typography variant='h6'>Edit Info</Typography>
-            </PrimaryIconButton>
+            <Box className={`flex jcfe aic g10`}>
+                <PrimaryIconButton className={`flex jcc aic g10`}>
+                    <EditRounded />
+                    <Typography variant='h6'>Edit Info</Typography>
+                </PrimaryIconButton>
+                <DeleteIconButton className={`flex jcc aic g10`}>
+                    <DeleteRounded />
+                    <Typography variant='h6'>Delete Account</Typography>
+                </DeleteIconButton>
+            </Box>
         </Box>
     )
 }

@@ -1,26 +1,26 @@
 import React, { useContext } from "react";
 import Form from "@/components/Form/Form";
-import { DashboardContext } from "@/context/DashboardContext";
 import { Box, Modal } from "@mui/material";
 import styles from "./modal.module.scss";
+import { ProfileContext } from "@/context/ProfileContext";
 
-const UpdateProfileModal = () => {
+const EditProfileModal = () => {
   const {
-    openDeleteCategoryModal,
-    handleCloseDeleteCategoryModal,
-  } = useContext(DashboardContext);
+    openEditProfileModal,
+    handleCloseEditProfileModal,
+  } = useContext(ProfileContext);
   return (
     <Modal
-      open={openDeleteCategoryModal}
-      onClose={handleCloseDeleteCategoryModal}
+      open={openEditProfileModal}
+      onClose={handleCloseEditProfileModal}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
       <Box className={`flex jcc aic ${styles.modal} center_abs_x_y pad20`}>
-        <Form type={"delete_category"} />
+        <Form type={"edit_profile"} />
       </Box>
     </Modal>
   );
 };
 
-export default UpdateProfileModal;
+export default EditProfileModal;
