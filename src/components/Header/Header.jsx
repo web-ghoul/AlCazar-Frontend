@@ -99,7 +99,7 @@ const Header = () => {
         </Box>
         <List className={`grid jcs aic ${styles.options_list} ${activeList && styles.active}`}>
           <ListItem>
-            <SecondaryIconButton onClick={() => handleGoToProfile(4)} sx={{ width: "100%" }} className={`flex jcc aic g5`}>
+            <SecondaryIconButton onClick={() => handleGoToProfile(0)} sx={{ width: "100%" }} className={`flex jcc aic g5`}>
               <AccountBoxRounded />
               <Typography variant="h6">My Account</Typography>
             </SecondaryIconButton>

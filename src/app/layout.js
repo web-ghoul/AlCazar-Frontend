@@ -25,17 +25,17 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <ThemeProvider theme={theme}>
-          <DashboardProvider>
-            <ProfileProvider>
-              <Provider store={store}>
+        <Provider store={store}>
+          <ThemeProvider theme={theme}>
+            <DashboardProvider>
+              <ProfileProvider>
                 <Main>
                   {children}
                 </Main>
-              </Provider>
-            </ProfileProvider>
-          </DashboardProvider>
-        </ThemeProvider>
+              </ProfileProvider>
+            </DashboardProvider>
+          </ThemeProvider>
+        </Provider>
       </body>
     </html>
   );
