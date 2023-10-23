@@ -3,7 +3,7 @@ import React from 'react'
 import { Toaster } from "react-hot-toast";
 import Footer from "@/components/Footer/Footer";
 import Header from "@/components/Header/Header";
-import DeleteItemModel from "@/models/deleteItemModel";
+import DeleteItemModel from "@/models/DeleteItemModel";
 import DeleteCategoryModel from "@/models/DeleteCategoryModal";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
