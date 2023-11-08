@@ -1,7 +1,7 @@
 @import "../../styles/variable.scss";
 .user_box {
     box-shadow: $box_shadow;
-    max-width: 250px;
+    max-width: 300px;
     .avatar {
         width: 150px;
         height: 150px;
@@ -10,5 +10,16 @@
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
+        transition: $transition;
+        overflow: hidden;
+        .overlay {
+            opacity: 0;
+        }
+        &:hover {
+            cursor: pointer;
+            .overlay {
+                opacity: 1;
+            }
+        }
     }
 }

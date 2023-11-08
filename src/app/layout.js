@@ -1,13 +1,15 @@
-"use client";
+"use client"
 import "../styles/webGhoul.scss";
 import "../styles/variable.scss";
 import Main from "./Main";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme";
-import { Provider } from "react-redux";
-import { store } from "@/store/store";
 import DashboardProvider from "@/context/DashboardContext";
 import ProfileProvider from "@/context/ProfileContext";
+import { Provider } from "react-redux";
+import { store } from "@/store/store";
+import CartProvider from "@/context/CartContext";
+import ItemProvider from "@/context/ItemContext";
 
 export default function RootLayout({ children }) {
   return (
@@ -25,17 +27,21 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
-        <Provider store={store}>
-          <ThemeProvider theme={theme}>
-            <DashboardProvider>
-              <ProfileProvider>
-                <Main>
-                  {children}
-                </Main>
-              </ProfileProvider>
-            </DashboardProvider>
-          </ThemeProvider>
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <DashboardProvider>
+            <ProfileProvider>
+              <CartProvider>
+                <ItemProvider>
+                  <Provider store={store}>
+                    <Main>
+                      {children}
+                    </Main>
+                  </Provider>
+                </ItemProvider>
+              </CartProvider>
+            </ProfileProvider>
+          </DashboardProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

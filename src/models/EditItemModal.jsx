@@ -3,6 +3,7 @@ import Form from "@/components/Form/Form";
 import { DashboardContext } from "@/context/DashboardContext";
 import { Box, Modal } from "@mui/material";
 import styles from "./modal.module.scss";
+import Title from "@/components/Title/Title";
 
 const EditItemModal = () => {
   const {
@@ -16,8 +17,9 @@ const EditItemModal = () => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box className={`flex jcc aic ${styles.modal} center_abs_x_y pad20`}>
-        <Form type={"edit_Item"} />
+      <Box className={`grid jcc aic ${styles.modal} center_abs_x_y pad20`}>
+        <Title title={"Edit Item"} fw={600} h={"h4"} align={"center"} />
+        <Form type={"edit_item"} />
       </Box>
     </Modal>
   );

@@ -21,29 +21,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout } from "@/store/authSlice";
 import { useRouter } from "next/navigation";
 import { ProfileContext } from "@/context/ProfileContext";
+import { CartContext } from "@/context/CartContext";
+import { resetProfile } from "@/store/profileSlice";
 
 const Header = () => {
+  const { handleToggleCart } = useContext(CartContext)
   const { setOption } = useContext(ProfileContext)
   const { token, userId } = useSelector((state) => state.auth)
+  const { profile, isLoading } = useSelector((state) => state.profile)
   const dispatch = useDispatch()
   const router = useRouter()
   const [activeList, setActiveList] = useState(false)
-  // if (window) {
-  //   window.addEventListener('click', (e) => {
-  //     if (!e.target.classList.contains("activate")) {
-  //       setActiveList(false)
-  //     }
-  //   })
-  // }
+  if (typeof window !== "undefined") {
+    window.addEventListener('click', (e) => {
+      if (!e.target.classList.contains("activate")) {
+        setActiveList(false)
+      }
+    })
+  }
 
   const handleLogOut = () => {
     dispatch(logout())
+    dispatch(resetProfile())
     router.push("/login")
   }
 
   const handleGoToProfile = (i) => {
     setOption(i)
-    router.push(`/profile/${userId}`)
+    router.push(`/profile`)
   }
   return (
     <AppBar className={`flex jcc aic ${styles.header}`}>
@@ -60,11 +65,15 @@ const Header = () => {
               <ListItemButton>Shop</ListItemButton>
             </Link>
           </ListItem>
-          <ListItem>
-            <Link href={`${process.env.NEXT_PUBLIC_DASHBOARD_PAGE}`}>
-              <ListItemButton>Dashboard</ListItemButton>
-            </Link>
-          </ListItem>
+          {
+            !isLoading && profile && profile.isAdmin && (
+              <ListItem>
+                <Link href={`${process.env.NEXT_PUBLIC_DASHBOARD_PAGE}`}>
+                  <ListItemButton>Dashboard</ListItemButton>
+                </Link>
+              </ListItem>
+            )
+          }
           <ListItem>
             <Link href={`${process.env.NEXT_PUBLIC_ABOUT_PAGE}`}>
               <ListItemButton>About</ListItemButton>
@@ -79,7 +88,7 @@ const Header = () => {
         <Box className={`flex jcsb aic g10`}>
           {
             (token && userId) ? (<>
-              <PrimaryIconButton>
+              <PrimaryIconButton onClick={handleToggleCart}>
                 <Badge>
                   <ShoppingCartRounded />
                 </Badge>

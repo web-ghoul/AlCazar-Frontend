@@ -3,6 +3,7 @@ import React, { createContext, useState } from "react";
 export const DashboardContext = createContext();
 
 const DashboardProvider = ({ children }) => {
+  const [dashboardOption, setDashboardOption] = useState(0)
   const [itemId, setItemId] = useState(null);
   const [categoryId, setCategoryId] = useState(null);
   const [user_id, setUserId] = useState(null);
@@ -12,8 +13,14 @@ const DashboardProvider = ({ children }) => {
   const [openEditItemModal, setOpenEditItemModal] = useState(false);
   const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
   const [openEditUserModal, setOpenEditUserModal] = useState(false);
+  const [openAddNewAdminModal, setOpenAddNewAdminModal] = useState(null)
+  const [editableItemData, setEditableItemData] = useState(null)
+  const [editableCategoryData, setEditableCategoryData] = useState(null)
+  const [editableUserData, setEditableUserData] = useState(null)
 
   //Delete
+
+  //Item
   const handleCloseDeleteItemModal = () => {
     setOpenDeleteItemModal(false);
   };
@@ -22,6 +29,7 @@ const DashboardProvider = ({ children }) => {
     setItemId(id);
   };
 
+  //Category
   const handleCloseDeleteCategoryModal = () => {
     setOpenDeleteCategoryModal(false);
   };
@@ -30,6 +38,7 @@ const DashboardProvider = ({ children }) => {
     setCategoryId(id);
   };
 
+  //User
   const handleCloseDeleteUserModal = () => {
     setOpenDeleteUserModal(false);
   };
@@ -39,28 +48,43 @@ const DashboardProvider = ({ children }) => {
   };
 
   //Edit
+
+  //Item
   const handleCloseEditItemModal = () => {
     setOpenEditItemModal(false);
   };
-  const handleOpenEditItemModal = (id) => {
+  const handleOpenEditItemModal = (data) => {
     setOpenEditItemModal(true);
-    setItemId(id);
+    setItemId(data._id);
+    setEditableItemData(data)
   };
 
+  //Category
   const handleCloseEditCategoryModal = () => {
     setOpenEditCategoryModal(false);
   };
-  const handleOpenEditCategoryModal = (id) => {
+  const handleOpenEditCategoryModal = (data) => {
     setOpenEditCategoryModal(true);
-    setCategoryId(id);
+    setCategoryId(data._id);
+    setEditableCategoryData(data)
   };
 
+  //User
   const handleCloseEditUserModal = () => {
     setOpenEditUserModal(false);
   };
-  const handleOpenEditUserModal = (id) => {
-    setOpenEditCategoryModal(true);
-    setUserId(id);
+  const handleOpenEditUserModal = (data) => {
+    setOpenEditUserModal(true);
+    setUserId(data._id);
+    setEditableUserData(data)
+  };
+
+  //Admin
+  const handleCloseAddNewAdminModal = () => {
+    setOpenAddNewAdminModal(false);
+  };
+  const handleOpenAddNewAdminModal = (data) => {
+    setOpenAddNewAdminModal(true);
   };
   return (
     <DashboardContext.Provider
@@ -68,6 +92,12 @@ const DashboardProvider = ({ children }) => {
         itemId,
         categoryId,
         user_id,
+        editableCategoryData,
+        editableUserData,
+        editableItemData,
+        setEditableCategoryData,
+        setEditableItemData,
+        setEditableUserData,
         openDeleteItemModal,
         handleCloseDeleteItemModal,
         handleOpenDeleteItemModal,
@@ -86,6 +116,11 @@ const DashboardProvider = ({ children }) => {
         openEditUserModal,
         handleCloseEditUserModal,
         handleOpenEditUserModal,
+        handleCloseAddNewAdminModal,
+        handleOpenAddNewAdminModal,
+        openAddNewAdminModal,
+        setDashboardOption,
+        dashboardOption
       }}
     >
       {children}

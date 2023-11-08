@@ -1,11 +1,11 @@
 "use client";
-import * as React from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import AddNewItem from "../AddNewItem/AddNewItem";
+import AddNewItem from "./AddNewItem/AddNewItem";
 import {
   AddToPhotosRounded,
   CategoryRounded,
@@ -16,11 +16,14 @@ import styles from "./DashboardOptions.module.scss";
 import "./global.scss";
 import { FaUserEdit } from "react-icons/fa";
 import { MdAdminPanelSettings } from "react-icons/md";
-import AddNewCategory from "../AddNewCategory/AddNewCategory";
-import Shop from "@/pages/Shop/Shop";
+import AddNewCategory from "./AddNewCategory/AddNewCategory";
+import ItemsSection from "@/sections/ItemsSection/ItemsSection";
 import Title from "../Title/Title";
 import CategoriesSection from "@/sections/CategoriesSection/CategoriesSection";
 import UsersSection from "@/sections/UsersSection/UsersSection";
+import AddNewAdmin from "./AddNewAdmin/AddNewAdmin";
+import FilterAndSearchAndSort from "../FilterAndSearchAndSort/FilterAndSearchAndSort";
+import { DashboardContext } from "@/context/DashboardContext";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,10 +55,10 @@ function a11yProps(index) {
 }
 
 const DashboardOptions = () => {
-  const [value, setValue] = React.useState(0);
-
+  const { setDashboardOption,
+    dashboardOption } = useContext(DashboardContext)
   const handleChange = (_, newValue) => {
-    setValue(newValue);
+    setDashboardOption(newValue);
   };
 
   return (
@@ -63,7 +66,7 @@ const DashboardOptions = () => {
       <Tabs
         orientation="vertical"
         variant="scrollable"
-        value={value}
+        value={dashboardOption}
         onChange={handleChange}
         aria-label="Vertical tabs example"
         className={`${styles.tabs} pad20`}
@@ -123,34 +126,40 @@ const DashboardOptions = () => {
           {...a11yProps(5)}
         />
       </Tabs>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={dashboardOption} index={0}>
         <Box className={`grid jcs aic g30`} sx={{ width: "100%" }}>
-          <Shop editable={true} />
+          <Title
+            title={"Items"}
+            align={"center"}
+            fw={600}
+            h={"h4"}
+          />
+          <FilterAndSearchAndSort />
+          <ItemsSection editable={true} />
         </Box>
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={dashboardOption} index={1}>
         <AddNewItem />
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={dashboardOption} index={2}>
         <Box className={`grid jcs aic g30`}>
           <Title
-            title={"Our Categories"}
+            title={"Categories"}
             h={"h4"}
-            line={true}
-            align={"left"}
-            fw={700}
+            align={"center"}
+            fw={600}
           />
           <CategoriesSection editable={true} />
         </Box>
       </TabPanel>
-      <TabPanel value={value} index={3}>
+      <TabPanel value={dashboardOption} index={3}>
         <AddNewCategory />
       </TabPanel>
-      <TabPanel value={value} index={4}>
+      <TabPanel value={dashboardOption} index={4}>
         <UsersSection />
       </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Seven
+      <TabPanel value={dashboardOption} index={5}>
+        <AddNewAdmin />
       </TabPanel>
     </Box>
   );

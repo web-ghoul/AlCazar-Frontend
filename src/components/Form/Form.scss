@@ -1,5 +1,17 @@
 .form {
+    &.edit_user_form {
+        min-width: 40vw;
+    }
+    width: 100%;
     .name_and_email_inputs {
         grid-template-columns: repeat(2, 1fr);
+    }
+    .item_image {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: 75px;
+        height: 75px;
+        border-radius: 50%;
     }
 }

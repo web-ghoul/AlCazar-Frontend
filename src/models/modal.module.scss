@@ -4,4 +4,13 @@
     border-radius: 6px;
     box-shadow: $box_shadow;
     width: max-content;
+    max-height: 90vh;
+    overflow-y: scroll;
+    max-width: 90vw;
+    &.view_item {
+        width: min-content;
+    }
+    .close_icon {
+        cursor: pointer;
+    }
 }

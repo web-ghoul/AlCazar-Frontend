@@ -24,7 +24,7 @@ const Category = ({ data, editable }) => {
         </Typography>
         <Box className={"flex jcsb aic g30"}>
           <SecondaryIconButton
-            onClick={() => handleOpenEditCategoryModal(data._id)}
+            onClick={() => handleOpenEditCategoryModal(data)}
             className={"flex jcc aic g10"}
           >
             <EditRounded />
