@@ -753,26 +753,22 @@ const Form = ({ type }) => {
     }),
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
-      // await axios
-      //   .post(
-      //     `${process.env.NEXT_PUBLIC_SERVER_URL}/admin/addNewCategory`,
-      //     formData
-      //   )
-      //   .then((res) => {
-      //     try {
-      //       toast.success(res.data.message);
-      //     } catch (error) {
-      //       toast.error(error.message);
-      //     }
-      //     resetForm();
-      //   })
-      //   .catch((err) => {
-      //     try {
-      //       toast.error(err.response.data.error);
-      //     } catch (error) {
-      //       toast.error(err.message);
-      //     }
-      //   });
+      await axios
+        .post(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/contactWithMe`,
+          values
+        )
+        .then((res) => {
+          try {
+            toast.success(res.data.message);
+            resetForm();
+          } catch (error) {
+            toast.error(error.message);
+          }
+        })
+        .catch((err) => {
+            handleError(err)
+        });
       setLoading(false);
     },
   });

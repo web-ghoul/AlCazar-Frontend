@@ -3,14 +3,14 @@ import { PrimaryTextField } from '@/MUIComponents/PrimaryTextField'
 import { SearchRounded } from '@mui/icons-material'
 import { Box, InputAdornment, Typography } from '@mui/material'
 import React, { useContext } from 'react'
-import styles from "./FilterAndSearchAndSort.module.scss"
+import styles from "./FilterAndSearchAndSortForItems.module.scss"
 import Title from '../Title/Title'
 import { useDispatch, useSelector } from 'react-redux'
 import { getItems } from '@/store/itemsSlice'
-import { FilterAndSearchAndSortContext } from '@/context/FilterAndSearchAndSortContext'
+import { FilterAndSearchAndSortForItemsContext } from '@/context/FilterAndSearchAndSortForItemsContext'
 
-const FilterAndSearchAndSort = () => {
-    const { search, sort, dimension, category, setSearch, setSort, setDimension, setCategory } = useContext(FilterAndSearchAndSortContext)
+const FilterAndSearchAndSortForItems = () => {
+    const { search, sort, dimension, category, setSearch, setSort, setDimension, setCategory } = useContext(FilterAndSearchAndSortForItemsContext)
     const { categories } = useSelector((state) => state.categories)
     const { dimensions } = useSelector((state) => state.dimensions)
     const dispatch = useDispatch()
@@ -27,8 +27,8 @@ const FilterAndSearchAndSort = () => {
         dispatch(getItems({ search, category: e.target.value, dimension, sort }))
     }
     const handleDimension = (e) => {
-        setDimension(e.target.value)
-        dispatch(getItems({ search, dimension: e.target.value, category, sort }))
+        setDimension(dimensions[e.target.value])
+        dispatch(getItems({ search, dimension: dimensions[+e.target.value], category, sort }))
     }
     return (
         <Box className={`grid jcs aic g20 ${styles.filter_and_search_and_sort}`}>
@@ -114,12 +114,12 @@ const FilterAndSearchAndSort = () => {
                         variant="standard"
                         onChange={handleDimension}
                     >
-                        <option key={-1} value={""}>
+                        <option key={-1} value={"-1"}>
                             Dimensions
                         </option>
                         {dimensions.map((dimension, i) =>
                         (
-                            <option key={i} value={dimension}>
+                            <option key={i} value={i}>
                                 <Typography variant='h5'>L{dimension.length} x W{dimension.width} x H{dimension.height}</Typography>
                             </option>
                         )
@@ -131,4 +131,4 @@ const FilterAndSearchAndSort = () => {
     )
 }
 
-export default FilterAndSearchAndSort
+export default FilterAndSearchAndSortForItems
