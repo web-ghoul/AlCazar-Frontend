@@ -69,52 +69,7 @@ const Form = ({ type }) => {
   } = useContext(DashboardContext);
   const { handleCloseDeleteAccountModal, handleCloseEditAccountModal, editableAccountData, handleCloseDeleteAddressModal, handleCloseAddNewAddressModal, handleCloseEditAddressModal, addressId, editableAddressData, handleCloseViewAvatarModal } = useContext(ProfileContext)
   const { handleCloseConfirmOrderModal, chosenAddress, cartPrice, resetCartFromLocalStorage, cartData, resetCart } = useContext(CartContext)
-  const loginFormik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: yup.object({
-      email: yup
-        .string("Enter your email")
-        .email("Enter a valid email")
-        .required("Email is required"),
-      password: yup
-        .string("Enter your password")
-        .min(8, "Password should be of minimum 8 characters length")
-        .required("Password is required"),
-    }),
-    onSubmit: async (values, { resetForm }) => {
-      setLoading(true);
-      await axios
-        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/login`, { ...values })
-        .then((res) => {
-          try {
-            const token = res.data.token
-            const userId = res.data.user._id
-            Cookies.set("AlCazar_token", token, { expires: 30 })
-            Cookies.set("AlCazar_userId", userId, { expires: 30 })
-            dispatch(logging({ token, userId }))
-            dispatch(getProfile())
-            toast.success(res.data.message);
-          } catch (error) {
-            toast.error(error.message);
-          }
-          resetForm();
-          router.push(`${process.env.NEXT_PUBLIC_HOME_PAGE}`);
-        })
-        .catch((err) => {
-          console.log(err)
-          try {
-            toast.error(err.response.data.error);
-          } catch (error) {
-            toast.error(error.message);
-          }
-        });
-      setLoading(false);
-    },
-  });
-  const [image, setImage] = useState()
+
   const { dimensions, setDimensions } = useContext(ItemContext)
   const {
     handleCloseDeleteSubscriptionModal, subscriptionEmailId
@@ -136,6 +91,51 @@ const Form = ({ type }) => {
       router.push(`/login`)
     }
   }
+
+  const loginFormik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: yup.object({
+      email: yup
+        .string("Enter your email")
+        .email("Enter a valid email")
+        .required("Email is required"),
+      password: yup
+        .string("Enter your password")
+        .min(8, "Password should be of minimum 8 characters length")
+        .required("Password is required"),
+    }),
+    onSubmit: async (values, { resetForm }) => {
+      setLoading(true);
+      await axios
+        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/login`, { ...values })
+        .then((res) => {
+          try {
+            const token = res.data.token
+            const userId = res.data.user._id
+            Cookies.set("AlCazar_token", token, { expires: 30 })
+            Cookies.set("AlCazar_userId", userId, { expires: 30 })
+            dispatch(logging({ token, userId }))
+            dispatch(getProfile())
+            toast.success(res.data.message);
+          } catch (error) {
+            toast.error(error.message);
+          }
+          resetForm();
+          router.push(`${process.env.NEXT_PUBLIC_HOME_PAGE}`);
+        })
+        .catch((err) => {
+          try {
+            toast.error(err.response.data.error);
+          } catch (error) {
+            toast.error(error.message);
+          }
+        });
+      setLoading(false);
+    },
+  });
 
   const registerFormik = useFormik({
     initialValues: {
@@ -170,7 +170,7 @@ const Form = ({ type }) => {
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
       await axios
-        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/register`, { ...values })
+        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/register`, { ...values })
         .then((res) => {
           try {
             toast.success(res.data.message);
@@ -767,7 +767,7 @@ const Form = ({ type }) => {
           }
         })
         .catch((err) => {
-            handleError(err)
+          handleError(err)
         });
       setLoading(false);
     },
