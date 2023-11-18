@@ -48,7 +48,7 @@ const Form = ({ type }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const { token } = useSelector((state) => state.auth)
-  const { id } = useParams()
+  const { id, userId } = useParams()
   const pathname = usePathname()
   const dispatch = useDispatch();
   const {
@@ -206,8 +206,26 @@ const Form = ({ type }) => {
         .min(8, "Password should be of minimum 8 characters length")
         .required("Password is required"),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values, { resetForm }) => {
+      setLoading(true);
+      await axios
+        .patch(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/resetPassword/${userId}`, values)
+        .then((res) => {
+          try {
+            toast.success(res.data.message);
+          } catch (error) {
+            toast.error(error.message);
+          }
+          resetForm();
+        })
+        .catch((err) => {
+          try {
+            toast.error(err.response.data.error);
+          } catch (error) {
+            toast.error(error.message);
+          }
+        });
+      setLoading(false);
     },
   });
 
@@ -221,8 +239,26 @@ const Form = ({ type }) => {
         .email("Enter a valid email")
         .required("Email is required"),
     }),
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    onSubmit: async (values, { resetForm }) => {
+      setLoading(true);
+      await axios
+        .post(`${process.env.NEXT_PUBLIC_SERVER_URL}/auth/forgotPassword`, values)
+        .then((res) => {
+          try {
+            toast.success(res.data.message);
+          } catch (error) {
+            toast.error(error.message);
+          }
+          resetForm();
+        })
+        .catch((err) => {
+          try {
+            toast.error(err.response.data.error);
+          } catch (error) {
+            toast.error(error.message);
+          }
+        });
+      setLoading(false);
     },
   });
 
