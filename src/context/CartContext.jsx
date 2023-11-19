@@ -49,7 +49,6 @@ const CartProvider = ({ children }) => {
     const addItemToCart = (data) => {
         const newPrice = cartPrice + data.data.price
         var isExist = false
-        console.log(data)
         cartData.map((d) => {
             if (d.data._id === data.data._id && d.dimension === data.dimension) {
                 isExist = true
@@ -65,7 +64,6 @@ const CartProvider = ({ children }) => {
             setCartCount(cartCount + 1)
             localStorage.setItem("cart_count", JSON.stringify(cartCount + 1))
             const newData = [...cartData, data]
-            console.log(newData)
             setCartData(newData)
             localStorage.setItem("cart_data", JSON.stringify(newData))
         }
