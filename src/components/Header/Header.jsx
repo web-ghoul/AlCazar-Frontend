@@ -72,6 +72,13 @@ const Header = () => {
                 <ListItemButton>Shop</ListItemButton>
               </Link>
             </ListItem>
+            {/* {
+              token && (<ListItem>
+                <Link href={`${process.env.NEXT_PUBLIC_CART_PAGE}`}>
+                  <ListItemButton>Cart</ListItemButton>
+                </Link>
+              </ListItem>)
+            } */}
             {
               !isLoading && profile && profile.isAdmin && (
                 <ListItem>
@@ -133,8 +140,17 @@ const Header = () => {
                     <Typography variant="h6">Shop</Typography>
                   </SecondaryIconButton>
                 </ListItem>
+                {/* {
+                  token && (<ListItem>
+                    <SecondaryIconButton onClick={() => router.push(`${process.env.NEXT_PUBLIC_CART_PAGE}`)} sx={{ width: "100%" }} className={`flex jcfs aic g20`}>
+                      <Shop2Rounded />
+                      <Typography variant="h6">Cart</Typography>
+                    </SecondaryIconButton>
+                  </ListItem>)
+                } */}
                 {
                   !isLoading && profile && profile.isAdmin && (
+
                     <ListItem>
                       <SecondaryIconButton onClick={() => router.push(`${process.env.NEXT_PUBLIC_DASHBOARD_PAGE}`)} sx={{ width: "100%" }} className={`flex jcfs aic g20`}>
                         <Shop2Rounded />
