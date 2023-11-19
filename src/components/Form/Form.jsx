@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Form.scss";
 import Login from "./Login";
 import Register from "./Register";
@@ -69,11 +69,16 @@ const Form = ({ type }) => {
   } = useContext(DashboardContext);
   const { handleCloseDeleteAccountModal, handleCloseEditAccountModal, editableAccountData, handleCloseDeleteAddressModal, handleCloseAddNewAddressModal, handleCloseEditAddressModal, addressId, editableAddressData, handleCloseViewAvatarModal } = useContext(ProfileContext)
   const { handleCloseConfirmOrderModal, chosenAddress, cartPrice, resetCartFromLocalStorage, cartData, resetCart } = useContext(CartContext)
-
   const { dimensions, setDimensions } = useContext(ItemContext)
   const {
     handleCloseDeleteSubscriptionModal, subscriptionEmailId
   } = useContext(SubscriptionContext);
+
+  useEffect(() => {
+    if (editableItemData) {
+      setDimensions(editableItemData.dimensions)
+    }
+  }, [editableItemData])
 
   const handleError = (err) => {
     let msg;
@@ -327,10 +332,8 @@ const Form = ({ type }) => {
       price: editableItemData && editableItemData.price,
       images: [],
       category: editableItemData && editableItemData.category,
-      count: editableItemData && editableItemData.count,
-      width: editableItemData && editableItemData.width,
-      length: editableItemData && editableItemData.length,
-      height: editableItemData && editableItemData.height,
+      quantity: editableItemData && editableItemData.quantity,
+      dimensions: []
     },
     validationSchema: yup.object({
       title: yup.string("Enter your title").required("Title is required"),
@@ -339,14 +342,14 @@ const Form = ({ type }) => {
       category: yup
         .string("Enter your category")
         .required("Category is required"),
-      count: yup.number("Enter your count").required("Count is required"),
-      width: yup.number("Enter your width").required("Width is required"),
-      length: yup.number("Enter your length").required("Length is required"),
-      height: yup.number("Enter your height").required("Height is required"),
+      quantity: yup.number("Enter your quantity").required("Quantity is required"),
     }),
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
       const formData = new FormData();
+      if (dimensions.length > 0) {
+        values.dimensions = dimensions
+      }
       if (values.images.length > 0) {
         values.images.map((image) => {
           formData.append("images", image);
