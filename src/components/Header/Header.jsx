@@ -183,7 +183,7 @@ const Header = () => {
                         </SecondaryIconButton>
                       </ListItem>
                       <ListItem>
-                        <PrimaryIconButton onClick={() => router.push(`${process.env.NEXT_PUBLIC_LOGIN_PAGE}`)} sx={{ width: "100%" }} className={`flex jcfs aic g20`}>
+                        <PrimaryIconButton onClick={handleLogOut} sx={{ width: "100%" }} className={`flex jcfs aic g20`}>
                           <LoginRounded />
                           <Typography variant="h6">Log Out</Typography>
                         </PrimaryIconButton>
@@ -191,7 +191,7 @@ const Header = () => {
                     </>
                   ) : (
                     <ListItem>
-                      <PrimaryIconButton onClick={handleLogOut} sx={{ width: "100%" }} className={`flex jcfs aic g20`}>
+                      <PrimaryIconButton onClick={() => router.push(`${process.env.NEXT_PUBLIC_LOGIN_PAGE}`)} sx={{ width: "100%" }} className={`flex jcfs aic g20`}>
                         <ExitToAppRounded />
                         <Typography variant="h6">Log In</Typography>
                       </PrimaryIconButton>
@@ -240,7 +240,6 @@ const Header = () => {
               </ListItem>
             </>)
           }
-
         </List>
       </PrimaryContainer>
     </AppBar>
