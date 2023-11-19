@@ -288,7 +288,7 @@ const Form = ({ type }) => {
     onSubmit: async (values, { resetForm }) => {
       setLoading(true);
       if (dimensions.length === 0) {
-        toast.error("Please Enter Item Dimensions")
+        toast.error("Please Set Item Dimensions")
         setLoading(false);
         return
       } else {
@@ -372,6 +372,7 @@ const Form = ({ type }) => {
           try {
             handleCloseEditItemModal()
             dispatch(getItems())
+            setDimensions([])
             toast.success(res.data.message);
           } catch (error) {
             toast.error(error.message);

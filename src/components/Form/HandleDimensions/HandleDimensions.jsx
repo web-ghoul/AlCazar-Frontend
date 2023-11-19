@@ -40,11 +40,11 @@ const HandleDimensions = () => {
     }
     const handleUpdateDimension = () => {
         if (width && length && height) {
-            let newDimensions = dimensions
+            let newDimensions = [...dimensions]
+            console.log(newDimensions, updateDimensionIndex)
             if (updateDimensionIndex <= dimensions.length) {
-                newDimensions[updateDimensionIndex].width = width
-                newDimensions[updateDimensionIndex].length = length
-                newDimensions[updateDimensionIndex].height = height
+                console.log(newDimensions[updateDimensionIndex].width)
+                newDimensions[updateDimensionIndex] = { width, length, height }
             }
             setDimensions(newDimensions)
             setWidth("")
