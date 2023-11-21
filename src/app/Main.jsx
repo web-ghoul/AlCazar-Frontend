@@ -40,6 +40,7 @@ const Main = ({ children }) => {
         try {
             const token = Cookies.get("AlCazar_token")
             const userId = Cookies.get("AlCazar_userId")
+            console.log(token, userId)
             if (!token || !userId) {
                 if (pathname === `${process.env.NEXT_PUBLIC_DASHBOARD_PAGE}` || pathname === `${process.env.NEXT_PUBLIC_CART_PAGE}`) {
                     router.push(`${process.env.NEXT_PUBLIC_LOGIN_PAGE}`)
