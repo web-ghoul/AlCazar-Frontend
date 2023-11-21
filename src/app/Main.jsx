@@ -38,8 +38,8 @@ const Main = ({ children }) => {
     const { getDataFromLocalStorage } = useContext(CartContext)
     useEffect(() => {
         try {
-            const token = Cookies.get("AlCazar_token")
-            const userId = Cookies.get("AlCazar_userId")
+            const token = Cookies.get("AlCazar_token", { domain: "jittery-newt-cuff-links.cyclic.app" })
+            const userId = Cookies.get("AlCazar_userId", { domain: "jittery-newt-cuff-links.cyclic.app" })
             console.log(token, userId)
             if (!token || !userId) {
                 if (pathname === `${process.env.NEXT_PUBLIC_DASHBOARD_PAGE}` || pathname === `${process.env.NEXT_PUBLIC_CART_PAGE}`) {
