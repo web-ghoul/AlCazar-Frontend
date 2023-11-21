@@ -19,8 +19,8 @@ const AuthenticationSection = ({ type }) => {
         const token = params.token
         const userId = params.userId
         if (token && userId) {
-          Cookies.set("AlCazar_token", token)
-          Cookies.set("AlCazar_userId", userId)
+          Cookies.set("AlCazar_token", token, { expires: 30 })
+          Cookies.set("AlCazar_userId", userId, { expires: 30 })
           router.push("/")
         }
       }
