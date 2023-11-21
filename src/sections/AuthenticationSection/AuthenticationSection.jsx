@@ -15,9 +15,15 @@ const AuthenticationSection = ({ type }) => {
   const router = useRouter()
   useEffect(() => {
     try {
-      Cookies.set("AlCazar_token", params.token)
-      Cookies.set("AlCazar_userId", params.userId)
-      router.push("/")
+      if (type === "auth_provider") {
+        const token = params.token
+        const userId = params.userId
+        if (token && userId) {
+          Cookies.set("AlCazar_token", token)
+          Cookies.set("AlCazar_userId", userId)
+          router.push("/")
+        }
+      }
     } catch (err) {
       console.log(err)
     }
